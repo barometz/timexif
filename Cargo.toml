@@ -1,6 +1,16 @@
 [package]
 name = "timexif"
 version = "0.1.0"
-authors = ["dominic"]
+authors = ["Dominic van Berkel <dominic@baudvine.net>"]
+
+[[bin]]
+name = "timexif"
+doc = false
+
+[lib]
+name = "timexif"
+doc = true
 
 [dependencies]
+chrono = "0.2.19"
+rexif = "0.3.3"
