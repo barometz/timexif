@@ -14,3 +14,4 @@ doc = true
 [dependencies]
 chrono = "0.2.19"
 rexif = "0.3.3"
+walkdir = "0.1.5"

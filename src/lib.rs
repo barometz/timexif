@@ -6,6 +6,8 @@
 //! tool.
 
 extern crate chrono;
+extern crate rexif;
+extern crate walkdir;
 
 pub mod filters;
 pub mod framing;
