@@ -2,6 +2,8 @@
 name = "timexif"
 version = "0.1.0"
 authors = ["Dominic van Berkel <dominic@baudvine.net>"]
+repository = "https://github.com/barometz/timexif"
+license = "MIT"
 
 [[bin]]
 name = "timexif"

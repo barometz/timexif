@@ -2,43 +2,41 @@
 // Distributed under the MIT open source license; see the file LICENSE.txt for
 // details.
 
-//! Lib crate for timexif, an EXIF/IPTC-timestamp-based time lapse creation
-//! tool.
+//! Lib crate for timexif, an EXIF-timestamp-based time lapse creation tool.
 
 extern crate chrono;
-extern crate jpeg_decoder;
-extern crate rexif;
-extern crate walkdir;
+
+use std::path::PathBuf;
+use chrono::NaiveDateTime;
 
 pub mod filters;
 pub mod framing;
 pub mod sequencer;
 
 /// An image, with a path to the file and a timestamp indicating when the
-/// image was created. Generally, the timestamp will be produced from
-/// EXIF/IPTC data, which don't include a timezone, which is why this uses
-/// `chrono`'s `NaiveDateTime`
+/// image was created. Generally, the timestamp will be produced from EXIF
+/// data, which doesn't include a timezone, which is why this uses `chrono`'s
+/// `NaiveDateTime`
 #[derive(Debug)]
 pub struct Image {
-    pub path: std::path::PathBuf,
-    pub timestamp: chrono::NaiveDateTime,
+    pub path: PathBuf,
+    pub timestamp: NaiveDateTime,
 }
 
 impl Image {
     /// Marginally more convenient constructor for Image, saving you a
     /// conversion on the path.
-    pub fn new(path: &str, timestamp: chrono::NaiveDateTime)
+    pub fn new(path: &str, timestamp: NaiveDateTime)
                -> Image {
-        Image { path: From::from(path), timestamp: timestamp, }
+        Image { path: PathBuf::from(path), timestamp: timestamp, }
     }
 
     /// Constructor that converts EXIF datetimes
-    /// TODO: Figure out IPTC format
     pub fn from_exif_datetime(path: &str, timestamp: &str)
                               -> Result<Image, chrono::ParseError> {
         // Standard EXIF datetime format
         let fmt = "%Y:%m:%d %H:%M:%S";
-        chrono::NaiveDateTime::parse_from_str(timestamp, fmt)
+        NaiveDateTime::parse_from_str(timestamp, fmt)
             .and_then(|ts| Ok(Image::new(path, ts)))
     }
 }

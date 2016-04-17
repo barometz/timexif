@@ -2,13 +2,15 @@
 // Distributed under the MIT open source license; see the file LICENSE.txt for
 // details.
 
-//! The sequencer module turns a collection or glob of paths to images into
-//! a sequence of `Image` with known time.
+//! The sequencer module walks through the provided path, finds all
+//! EXIF-tagged images inside it and returns a list of matching Images.
+
+extern crate rexif;
+extern crate walkdir;
 
 use std::path::Path;
 
-use rexif;
-use walkdir::WalkDir;
+use self::walkdir::WalkDir;
 
 use ::Image;
 
@@ -26,7 +28,6 @@ fn get_exif_datetime(path: &String) -> Option<String> {
     let tagvalue = match rexif::parse_file(path) {
         Ok(record) => record.entries.iter()
             // See if any tags are DateTimeOriginal
-            // TODO: Might also want DateTime?
             .find(|&e| e.tag == rexif::ExifTag::DateTimeOriginal)
             .map(|e| e.value.clone()),
         Err(_) => return None

@@ -6,10 +6,10 @@
 //! do or do not match certain criteria. Primarily, this is intended for
 //! removing images that are too dark.
 
+extern crate jpeg_decoder as jpeg;
+
 use std::fs::File;
 use std::io::BufReader;
-
-use jpeg_decoder as jpeg;
 
 use ::Image;
 
