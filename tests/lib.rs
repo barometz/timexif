@@ -61,19 +61,17 @@ fn brightness_none_ge_max() {
     assert_eq!(0, filtered.len());
 }
 
-/// The right number of images is filtered out with some threshold. I suspect
-/// I may need to do away with the plant images and generate some proper test
-/// images instead.
+/// The right number of images is filtered out with some threshold.
 #[test]
 fn brightness_threshold() {
     let imgs = sequencer::get_images(BRIGHTNESS);
     let filtered = imgs.iter()
-        .filter(|i| filters::filter_dark(i, 90))
+        .filter(|i| filters::filter_dark(i, 170))
         .collect::<Vec<&Image>>();
-    assert_eq!(4, filtered.len());
+    assert_eq!(3, filtered.len());
 
     let filtered = imgs.iter()
-        .filter(|i| filters::filter_dark(i, 20))
+        .filter(|i| filters::filter_dark(i, 52))
         .collect::<Vec<&Image>>();
     assert_eq!(5, filtered.len());
 }
