@@ -6,6 +6,7 @@
 //! tool.
 
 extern crate chrono;
+extern crate jpeg_decoder;
 extern crate rexif;
 extern crate walkdir;
 
